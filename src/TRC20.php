@@ -43,7 +43,7 @@ class TRC20 extends TRX
     /**
      * 发送TRC20交易
      */
-    public function transferTRC20(string $private_key, string $from, string $to, float $amount, $extradata = null, float $fee_limit = 150000000): Transaction
+    public function transferTRC20(string $private_key, string $from, string $to, float $amount, $message = null, float $fee_limit = 150000000): Transaction
     {
         $toFormat = Formatter::toAddressFormat($to);
         $trans_amount = $this->toTronValue($amount, $this->decimals);
@@ -63,7 +63,7 @@ class TRC20 extends TRX
         }
 
         $tradeobj = $this->signTransaction($private_key, $body['transaction']);
-        if(!is_null($extradata)) $tradeobj['raw_data']->data = bin2hex($extradata);
+        if(!is_null($message)) $tradeobj['raw_data']->data = bin2hex($message);
         $response = $this->sendRawTransaction($tradeobj);
 
         if (isset($response['result']) && $response['result'] == true) {

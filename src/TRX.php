@@ -161,7 +161,7 @@ class TRX implements WalletInterface
         return ($sun ? $account['balance'] : Utils::toDecimals($account['balance']));
     }
 
-    public function transfer(string $private_key, string $from, string $to, float $amount, $extradata = null): Transaction
+    public function transfer(string $private_key, string $from, string $to, float $amount, $message = null): Transaction
     {
 		if($from === $to) throw new InvalidArgumentException('The from and to arguments cannot be the same !');
 		$data = [
@@ -173,7 +173,7 @@ class TRX implements WalletInterface
 		$transaction = $this->api->post('wallet/createtransaction',$data);
         
 		$signature = $this->signature($private_key, $transaction);
-		if(!is_null($extradata)) $signature['raw_data']->data = bin2hex($extradata);
+		if(!is_null($message)) $signature['raw_data']->data = bin2hex($message);
 		$broadcast = (array) $this->sendRawTransaction($signature);
 
         if (isset($broadcast['result']) && $broadcast['result'] == true) {
