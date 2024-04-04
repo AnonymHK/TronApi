@@ -735,4 +735,21 @@ class Utils
         $keyPair = $ec->keyFromPrivate($private_key);
         return $keyPair->getPublic()->encode('hex');
     }
+
+    /**
+     * 获取指点时间戳的Unix
+     */
+    public static function getUnixTimestamp($minute = 0, $need_millisecond = true){
+        if($minute == 0){
+            $symbol = "now";
+        }
+        else if($minute > 0){
+            $symbol = "+{$minute}";
+        }
+        else{
+            $symbol = "{$minute}";
+        }
+
+        return $need_millisecond ? strtotime($symbol)."000" : strtotime($symbol);
+    }
 }
