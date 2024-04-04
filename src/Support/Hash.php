@@ -1,5 +1,6 @@
 <?php
-namespace IEXBase\TronAPI\Support;
+
+namespace TronApi\Support;
 
 class Hash
 {

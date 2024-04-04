@@ -1,68 +1,55 @@
-# TRON API
-A PHP API for interacting with the Tron Protocol
+## 概述
+波场API 接口封装, 目前支持波场的 TRX 和 TRC20 中常用生成地址，发起转账，离线签名等功能.
+库基于官方Tron API实现, 除密码学ECC库外无第三方依赖引用.
 
-[![Latest Stable Version](https://poser.pugx.org/anonymhk/tron-api/version)](https://packagist.org/packages/anonymhk/tron-api)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
-[![Build Status](https://api.travis-ci.com/anonymhk/tron-api.svg?branch=master)](https://travis-ci.com/anonymhk/tron-api)
-[![Contributors](https://img.shields.io/github/contributors/anonymhk/tron-api.svg)](https://github.com/anonymhk/tron-api/graphs/contributors)
-[![Total Downloads](https://img.shields.io/packagist/dt/anonymhk/tron-api.svg?style=flat-square)](https://packagist.org/packages/anonymhk/tron-api)
+## 特点
 
-## Install  --ignore-platform-reqs
+1. 一套写法兼容 TRON 网络中 TRX 货币和 TRC 系列所有通证
+1. 接口方法可可灵活增减
+
+Tips:  php版本最低支持8.0且需要安装GMP扩展!
+
+## 支持方法
+
+- 生成地址 `generateAddress()`
+- 验证地址 `validateAddress(Address $address)`
+- 根据私钥得到地址 `privateKeyToAddress(string $privateKeyHex)`
+- 查询余额 `balance(Address $address)`
+- 交易转账(离线签名) `transfer(Address $from, Address $to, float $amount)`
+- 查询最新区块 `blockNumber()`
+- 根据区块链查询信息 `blockByNumber(int $blockID)`
+- 根据交易哈希查询信息 `transactionReceipt(string $txHash)`
+
+## 快速开始
+
+### 安装
 
 ```bash
-> composer require anonymhk/tron-api
-```
-## Requirements
-
-The following versions of PHP are supported by this version.
-
-* PHP 8.0
-
-## Example Usage
-
-```php
-use IEXBase\TronAPI\Tron;
-
-$fullNode = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
-$solidityNode = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
-$eventServer = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
-
-try {
-    $tron = new \IEXBase\TronAPI\Tron($fullNode, $solidityNode, $eventServer);
-} catch (\IEXBase\TronAPI\Exception\TronException $e) {
-    exit($e->getMessage());
-}
-
-
-$this->setAddress('..');
-//Balance
-$tron->getBalance(null, true);
-
-// Transfer Trx
-var_dump($tron->send('to', 1.5));
-
-//Generate Address
-var_dump($tron->createAccount());
-
-//Get Last Blocks
-var_dump($tron->getLatestBlocks(2));
-
-//Change account name (only once)
-var_dump($tron->changeAccountName('address', 'NewName'));
-
-
-// Contract
-$tron->contract('Contract Address');
-
-
-
+> composer require anonymhk/tronApi
 ```
 
-## Testing
+### 接口调用
 
-``` bash
-$ vendor/bin/phpunit
+``` php
+
+$uri = 'https://api.shasta.trongrid.io';// shasta testnet
+$api = new \TronApi\Api(new Client(['base_uri' => $uri]));
+
+$trxWallet = new \TronApi\TRX($api);
+$addressData = $trxWallet->generateAddress();
+// $addressData->privateKey
+// $addressData->address
+
+$config = [
+    'contract_address' => 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',// USDT TRC20
+    'decimals' => 6,
+];
+$trc20Wallet = new \TronApi\TRC20($api, $this->config);
+$addressData = $trc20Wallet->generateAddress();
 ```
 
-## Donations
-**Tron(TRX)**: TRWBqiqoFZysoAeyR1J35ibuyc8EvhUAoY
+## 计划
+
+- 测试用例
+- ...
+
