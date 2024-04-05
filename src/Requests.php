@@ -23,11 +23,8 @@ final class Requests {
 		if(isset($options['connect_timeout'])){
 			$connect_timeout = $options['connect_timeout'];
 		}
-		if(isset($options['api_key'])){
-			$this->curl_headers = [
-				'TRON-PRO-API-KEY' => $options['api_key'],
-				'Content-Type' => 'application/json'
-			];
+		if(!empty($options['headers'])){
+			$this->curl_headers = $options['headers'];
 		}
 		curl_setopt($this->curl, CURLOPT_CONNECTTIMEOUT, $connect_timeout);
 		curl_setopt($this->curl, CURLOPT_TIMEOUT, $request_timeout);

@@ -4,6 +4,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use TronApi\TRX;
 
+// 正式环境 'https://api.trongrid.io'
+
 const URI = 'https://api.shasta.trongrid.io'; // shasta testnet
 const ADDRESS = 'TGytofNKuSReFmFxsgnNx19em3BAVBTpVB';
 const PRIVATE_KEY = '0xf1b4b7d86a3eff98f1bace9cb2665d0cad3a3f949bc74a7ffb2aaa968c07f521';

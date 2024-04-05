@@ -18,7 +18,7 @@ class TRX implements WalletInterface
     protected $api;
     protected $decimals;
 
-    public function __construct(string $apiurl = 'https://api.trongrid.io', array $options = [])
+    public function __construct(string $apiurl, array $options = [])
     {        
         $this->api = new Api($apiurl, $options);
     }
