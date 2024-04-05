@@ -9,12 +9,6 @@
 
 Tips:  php版本最低支持8.0且需要安装GMP扩展!
 
-ApiKey需自行申请
-
-Mainnet：		https://api.trongrid.io
-Shasta Testnet:	https://api.shasta.trongrid.io
-Nile Testnet:	https://nile.trongrid.io
-
 ## 支持方法
 
 - 生成地址 `generateAddress()`
@@ -48,6 +42,10 @@ Nile Testnet:	https://nile.trongrid.io
 ### 接口调用
 
 ``` php
+# ApiKey需自行申请
+# Mainnet：		https://api.trongrid.io
+# Shasta Testnet:	https://api.shasta.trongrid.io
+# Nile Testnet:	https://nile.trongrid.io
 
 $uri = 'https://api.shasta.trongrid.io';// shasta testnet
 $trxWallet = new TRX(apiurl: $uri);
@@ -57,6 +55,10 @@ var_dump($addressData);
 
 
 $option = [
+	'headers' => [
+        'TRON-PRO-API-KEY' => ApiSecret,
+        'Content-Type' => 'application/json'
+    ],
     'contract_address' => 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',// USDT TRC20
     'decimals' => 6,
 ];
